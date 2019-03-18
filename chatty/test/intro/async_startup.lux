@@ -1,0 +1,32 @@
+[doc Demo too fast start]
+
+# Assign a global variable which is accessible in all shells
+[global topic=mytopic]
+[global ebin=../../../chatty/ebin]
+
+# Start a shell
+[shell server]
+    # Send text to the active shell
+    !file $ebin/chatty.beam
+    # Match output from the active shell
+    ?Erlang BEAM file
+
+    # Ensure status
+    !echo "===$?==="
+    ?^===0===
+    ?SH-PROMPT:
+
+    !erl -pa $ebin -sname $topic -s chatty server
+
+[shell hawk]
+    [progress Will fail due to startup race cond]
+    !erl -pa $ebin -sname hawk -noshell -s chatty client $topic
+
+    # Multi line match. The first double quote char defines the first
+    # column of the regexp. The indentation of bar and baz is significant.
+    """?
+    Trying to join the $topic chat room...
+    Welcome to the chat room $topic!!!
+
+    hawk>
+    """
