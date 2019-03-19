@@ -9,13 +9,13 @@
 
 -define(SERVER, ?MODULE).
 
-ff(Format, Args) ->
-    lists:flatten(io_lib:format(Format, Args)).
-
 display(Format, Args) ->
     Text = ff(Format, Args),
     ok = io:format(Text),
     Text.
+
+ff(Format, Args) ->
+    lists:flatten(io_lib:format(Format, Args)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Server side
@@ -63,7 +63,7 @@ server_loop(#server_state{clients = Clients} = SS) ->
             C = #client{nick = Nick, pid = From, ref = Ref},
             log(SS, "Client ~s joined the room.\n", [Nick]),
             Room = SS#server_state.room,
-            Greeting = "Welcome to the chat room " ++ Room ++ "!!!\n",
+            Greeting = "Welcome to the chat room " ++ Room ++ "!!!",
             From ! {joined, self(), Greeting},
             Info = ff("~s: Client joined.", [Nick]),
             broadcast_display(SS, Info, [From]),
@@ -144,7 +144,8 @@ client([ServerNode]) when is_atom(ServerNode) ->
 client_loop(CS) ->
     receive
         {joined, _From, Greeting} ->
-            reprompt(CS, Greeting),
+            Extra = "\nEnter text and press enter. Exit chat with ^d.\n",
+            reprompt(CS, Greeting ++ Extra),
             client_loop(CS);
         {display, _From, Text} ->
             reprompt(CS, "\n" ++ Text),

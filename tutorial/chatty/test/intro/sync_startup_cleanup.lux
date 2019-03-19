@@ -1,6 +1,6 @@
 [doc Demo cleanup]
 
-[include ../include/macros.luxinc]
+[include ../../../include/macros.luxinc]
 
 [global topic=mytopic]
 [global ebin=../../../chatty/ebin]
@@ -17,9 +17,10 @@
 
 [shell hawk]
     !erl -pa $ebin -sname hawk -noshell -s chatty client $topic
-    """?
+    """??
     Trying to join the $topic chat room...
     Welcome to the chat room $topic!!!
+    Enter text and press enter. Exit chat with ^d.
 
     hawk>
     """
@@ -31,9 +32,10 @@
     ?Eshell
     ?cons@
     !chatty:client(['${topic}']).
-    """?
+    """??
     Trying to join the $topic chat room...
     Welcome to the chat room $topic!!!
+    Enter text and press enter. Exit chat with ^d.
 
     cons>
     """

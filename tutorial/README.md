@@ -1,7 +1,8 @@
 ### INSTALL
 
 Read the file **INSTALL.md** or view it online on
-[GitHub](https://github.com/hawk/lux/blob/euc/chatty/INSTALL.md).
+[GitHub](https://github.com/hawk/lux/blob/euc/tutorial/chatty/INSTALL.md) about
+how to do a local install of LUX, build and test the chatty app.
 
 ### Tail-f/Cisco
   - ConfD
@@ -17,29 +18,31 @@ Read the file **INSTALL.md** or view it online on
 ### How do we test a simple chat server?
     cd lux/chatty/test/intro
     erl -pa ../../chatty/ebin -sname mytopic -s chatty server
-    erl -pa ../../chatty/ebin -sname cons -s chatty client mytopic
-    erl -pa ../../chatty/ebin -sname hawk -s chatty client mytopic
+    erl -pa ../../chatty/ebin -sname cons    -s chatty client mytopic
+    erl -pa ../../chatty/ebin -sname hawk    -s chatty client mytopic
 
-### Walkthru
+### Walkthru the test cases and emphasize on their differences
     cd lux/chatty/test/intro
-    async_startup.lux
+    async_startup_fail.lux
     sync_startup.lux
-    cleanup.lux
+    sync_startup_cleanup.lux
 
 ### Post mortem analysis
-  - Textual
-    - Suite
-        - Summary log
-    - Case
-        - Stdin log
-        - Stdout log
-        - Event log
-        - Extra logs
-        - TAP
-        - JUnit
-  - Annotated
-    - HTML
-    - Statistics
+  - Walkthru the different logs
+    - Test suite
+      - Annotated summary log (HTML)
+      - Summary log
+      - Config log
+    - Test case
+      - Annotated event log (HTML)
+      - Shell stdin log(s)
+      - Shell stdout log(s)
+      - Event log
+      - Extra logs
+      - Config log
+      - Statistics
+      - TAP log
+      - JUnit log
 
 ### Debugging
   - Use stdin logs
@@ -57,16 +60,20 @@ Read the file **INSTALL.md** or view it online on
 
 ### Infra structure support
   - Architecture/host dependent config
+    - uname -sm
+    - multiplier
+    - timeout
   - Skip and skip unless
   - Unstable and unstable unless
+  - Build and test
+    - Walkthru lux/chatty/test/Makefile
+  - Jenkins
+    - Automated tests
   - History of test runs
-      - Overview
-      - Per architecture
-      - Per host
-      - Still failing test cases
-  - build and test
-      - Use --list-dir
-      - Use make
+    - Overview
+    - Per architecture
+    - Per host
+    - Still failing test cases
 
 ### More concepts
   - Fail pattern
@@ -83,17 +90,18 @@ Read the file **INSTALL.md** or view it online on
       - Statement block (my)
       - Sub expression
   - Shell config
-      - Pseudo terminal (PTY)
-      - Normalized prompt
-      - Using other types of shells
+    - Pseudo terminal (PTY)
+    - Normalized prompt
+    - Using other types of shells
   - Using LUX as an all purpose scripting language
 
-### patterns
+### Patterns
   - Match on prompts
+  - Check command status
   - Match on trace output
   - Match on poll style printout
   - Match on permutations
-  - Regexp vs verbatim
+  - Regexp match vs verbatim match
   - Use the power of various interactive languages
 
 ### Implementation
@@ -106,17 +114,18 @@ Read the file **INSTALL.md** or view it online on
 ### Maintenance of LUX itself
   - Run LUX in Erlang debugger
   - Use Erlang trace
-      - Interactive display
-      - Display filtered Erlang trace
+    - Interactive display
+    - Display filtered Erlang trace
   - Use Event Tracer
   - Use xref
   - Use reltool
   - Install as stand-alone incl Erlang runtime
-  - Generate documentation
-      - Markdown
-        - From example runs
-        - From built-in debugger help
-  - Delux test cases
+  - Documentation
+    - Markdown
+    - Generated from example runs
+    - Generated from built-in debugger help
+    - Generated from .md.src files
+  - Test of LUX itsel
 
 ### Lessons learned
   - Expect like testing requires a different mindset
@@ -126,7 +135,7 @@ Read the file **INSTALL.md** or view it online on
 
 ### More info
 
-github.com/hawk/lux (Apache license)
+  - Download from https://github.com/hawk/lux (Apache license)
 
 See the file **../lux.html** for the full documentation or view it online
 on [GitHub](https://github.com/hawk/lux/blob/euc/doc/lux.md).

@@ -18,18 +18,22 @@
 
 [shell hawk]
     !erl -pa $ebin -sname hawk -noshell -s chatty client $topic
+    # Match with variable
     """?
     Trying to join the $topic chat room...
     Welcome to the chat room $topic!!!
+    Enter text and press enter. Exit chat with \^d.
 
     hawk>
     """
 
 [shell cons]
     !erl -pa $ebin -sname cons -noshell -s chatty client $topic
-    """?
+    # Verbatim match
+    """??
     Trying to join the $topic chat room...
     Welcome to the chat room $topic!!!
+    Enter text and press enter. Exit chat with ^d.
 
     cons>
     """
