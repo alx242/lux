@@ -1,6 +1,6 @@
 LUXDIRS=$(filter-out .,$(shell lux --mode=list_dir *))
 
-.PHONY: all build test clean info
+.PHONY: all build test history clean info
 
 all: build test
 
@@ -13,8 +13,11 @@ build:
 test:
 	lux .
 
+history:
+	lux --history . .
+
 clean:
-	rm -rf lux_logs chatty_*.log erl_crash.dump *~
+	rm -rf lux_logs lux_history* *~
 	@for d in $(LUXDIRS); do \
 	   if test -f $$d/Makefile ; then \
 	      (cd $$d && $(MAKE) $@) ; \

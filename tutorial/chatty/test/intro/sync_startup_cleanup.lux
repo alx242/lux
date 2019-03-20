@@ -1,6 +1,6 @@
 [doc Demo cleanup]
 
-[include ../../../include/macros.luxinc]
+[include ../../../support/luxinc/macros.luxinc]
 
 [global topic=mytopic]
 [global ebin=../../../chatty/ebin]

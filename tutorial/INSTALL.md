@@ -10,5 +10,4 @@
     export "PATH=$PWD/bin:$PATH"
 
 ### Run tests
-    cd chatty
     make

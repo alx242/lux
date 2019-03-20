@@ -16,19 +16,20 @@ how to do a local install of LUX, build and test the chatty app.
     - 100+ adaptors for network elements lacking standard interfaces
 
 ### How do we test a simple chat server?
-    cd lux/chatty/test/intro
-    erl -pa ../../chatty/ebin -sname mytopic -s chatty server
-    erl -pa ../../chatty/ebin -sname cons    -s chatty client mytopic
-    erl -pa ../../chatty/ebin -sname hawk    -s chatty client mytopic
+    cd chatty/test/intro
+    erl -pa ../../../chatty/ebin -sname mytopic -s chatty server
+    erl -pa ../../../chatty/ebin -sname cons    -s chatty client mytopic
+    erl -pa ../../../chatty/ebin -sname hawk    -s chatty client mytopic
 
 ### Walkthru the test cases and emphasize on their differences
-    cd lux/chatty/test/intro
+    cd chatty/test/intro
+    make test
     async_startup_fail.lux
     sync_startup.lux
     sync_startup_cleanup.lux
 
 ### Post mortem analysis
-  - Walkthru the different logs
+  - Walkthru the different logs at lux_logs/latest_run
     - Test suite
       - Annotated summary log (HTML)
       - Summary log
@@ -45,6 +46,7 @@ how to do a local install of LUX, build and test the chatty app.
       - JUnit log
 
 ### Debugging
+  - Use --progress such as -v
   - Use stdin logs
     - Create shells manually
     - Copy and paste from stdin log
@@ -59,21 +61,29 @@ how to do a local install of LUX, build and test the chatty app.
       c
 
 ### Infra structure support
-  - Architecture/host dependent config
+  - support/luxcfg
     - uname -sm
+    - Default luxcfg
+    - Variables
+    - Incompatible shells
     - multiplier
-    - timeout
-  - Skip and skip unless
-  - Unstable and unstable unless
   - Build and test
-    - Walkthru lux/chatty/test/Makefile
+    - chatty/test/Makefile
+    - chatty/test/infra/Makefile
+  - Unstable and unstable unless
+    - chatty/test/infra/noise.lux
+    - chatty/test/infra/unstable.lux
+    - chatty/test/infra/skip.lux
+  - History of test run results
+    - make history
+    - Walkthru lux_history.html
+      - Overview
+      - Per architecture
+      - Per host
+      - Still failing test cases
   - Jenkins
     - Automated tests
-  - History of test runs
-    - Overview
-    - Per architecture
-    - Per host
-    - Still failing test cases
+    - Display Jenkins test results as LUX history for non-LUX tests
 
 ### More concepts
   - Fail pattern
@@ -89,20 +99,14 @@ how to do a local install of LUX, build and test the chatty app.
       - Global for all shells
       - Statement block (my)
       - Sub expression
+  - Regexp match vs verbatim match
+  - Match on permutations
   - Shell config
     - Pseudo terminal (PTY)
     - Normalized prompt
     - Using other types of shells
-  - Using LUX as an all purpose scripting language
-
-### Patterns
-  - Match on prompts
-  - Check command status
-  - Match on trace output
-  - Match on poll style printout
-  - Match on permutations
-  - Regexp match vs verbatim match
   - Use the power of various interactive languages
+  - Using LUX as an all purpose scripting language
 
 ### Implementation
   - Why is Erlang a good fit?
