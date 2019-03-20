@@ -23,6 +23,14 @@ all debug install clean:
 xref:
 	bin/lux --xref
 
+local_install:
+	mkdir -p $(DESTDIR)
+	tar cf - * | (cd $(DESTDIR) && tar xf -)
+	if [ "$(ETCDIR)" != "$(DESTDIR)/priv" ]; then \
+	  echo "# Added by Lux installer" >> $(LUXCFG); \
+	  echo "[config config_dir=$(ETCDIR)]" >> $(LUXCFG); \
+	fi
+
 .PHONY: test
 test:
 	cd test && $(MAKE) all
